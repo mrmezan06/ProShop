@@ -80,3 +80,12 @@ const products = [
 ];
 
 module.exports = products;
+/* When we use ES6 modules, we can use export default instead of module.exports.
+ *  This is because ES6 modules are not supported in Node.js yet.
+ *  So, we use module.exports instead.
+ *  If we want to use ES6 modules, we need to add type: "module" in package.json
+ *  or change the file extension to .mjs (for module javascript)
+ *  and use import instead of require.
+ *  When we import something, then in filename importing end with .js and export default
+ */
+// export default products;
