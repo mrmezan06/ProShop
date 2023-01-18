@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import HomeScreen from './screens/HomeScreen';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProductScreen from './screens/ProductScreen';
+import CartScreen from './screens/CartScreen';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomeScreen />} exact />
             <Route path="/product/:id" element={<ProductScreen />} />
+            <Route path="/cart/:id?" element={<CartScreen />} />
           </Routes>
         </Container>
       </main>
