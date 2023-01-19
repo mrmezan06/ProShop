@@ -1,6 +1,8 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 const becrypt = require('bcryptjs');
+const matchPassword = require('../utils/matchingPassword');
+const generateToken = require('../utils/generateToken');
 
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -8,19 +10,14 @@ const authUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user) {
-    becrypt.compare(password, user.password, (err, result) => {
-      if (result) {
-        res.status(200).json({ user });
-      } else {
-        res.status(401).json({ message: 'Wrong password!' });
-      }
-    });
-    /* if (await user.matchPassword(password)) {
+    if (await matchPassword(password, user.password)) {
       const { password, ...userWithoutPassword } = user._doc;
-      res.status(200).json({ ...userWithoutPassword, token: null });
+      res
+        .status(200)
+        .json({ ...userWithoutPassword, token: generateToken(user._id) });
     } else {
       res.status(401).json({ message: 'Wrong password!' });
-    } */
+    }
   } else {
     res.status(401).json({ message: 'User not found!' });
   }
