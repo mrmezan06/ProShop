@@ -25,4 +25,15 @@ const authUser = asyncHandler(async (req, res) => {
   //   res.status(200).json({ user });
 });
 
-module.exports = { authUser };
+const getUserProfile = asyncHandler(async (req, res) => {
+  //   const user = await User.findById(req.user._id);
+  const user = req.user;
+  if (user) {
+    const { token, ...userWithoutToken } = user._doc;
+    res.status(200).json({ ...userWithoutToken });
+  } else {
+    res.status(404).json({ message: 'User not found!' });
+  }
+});
+
+module.exports = { authUser, getUserProfile };
