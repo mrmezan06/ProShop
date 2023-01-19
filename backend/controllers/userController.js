@@ -25,6 +25,28 @@ const authUser = asyncHandler(async (req, res) => {
   //   res.status(200).json({ user });
 });
 
+const registerUser = asyncHandler(async (req, res) => {
+  const { name, email, password } = req.body;
+
+  const existingUser = await User.findOne({ email });
+
+  if (existingUser) {
+    res.status(400).json({ message: 'User already exists!' });
+  } else {
+    const salt = await becrypt.genSalt(10);
+    const hashedPassword = await becrypt.hash(password, salt);
+    const user = await User.create({ name, email, password: hashedPassword });
+    if (user) {
+      const { password, ...userWithoutPassword } = user._doc;
+      res
+        .status(201)
+        .json({ ...userWithoutPassword, token: generateToken(user._id) });
+    } else {
+      res.status(400).json({ message: 'Invalid user data!' });
+    }
+  }
+});
+
 const getUserProfile = asyncHandler(async (req, res) => {
   //   const user = await User.findById(req.user._id);
   const user = req.user;
@@ -36,4 +58,4 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { authUser, getUserProfile };
+module.exports = { authUser, getUserProfile, registerUser };
