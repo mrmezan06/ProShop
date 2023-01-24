@@ -89,4 +89,33 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { authUser, getUserProfile, registerUser };
+const updateUserProfile = asyncHandler(async (req, res) => {
+  try {
+    if (req.body.password) {
+      const salt = await becrypt.genSalt(10);
+      const hashedPassword = await becrypt.hash(req.body.password, salt);
+      req.body.password = hashedPassword;
+    }
+
+    if (req.body.isAdmin) {
+      // req.body.isAdmin = false;
+      delete req.body.isAdmin;
+      // res.status(400).json({ message: 'You cannot change your admin status!' });
+    }
+
+    const user = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      { $set: req.body },
+      { new: true }
+    );
+    if (user) {
+      res.status(200).json({ user });
+    } else {
+      res.status(404).json({ message: 'User not found!' });
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+module.exports = { authUser, getUserProfile, registerUser, updateUserProfile };
