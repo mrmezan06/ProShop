@@ -4,6 +4,10 @@ const becrypt = require('bcryptjs');
 const matchPassword = require('../utils/matchingPassword');
 const generateToken = require('../utils/generateToken');
 
+// @desc    Auth user & get token
+// @route   POST /api/users/login
+// @access  Public
+
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -24,6 +28,10 @@ const authUser = asyncHandler(async (req, res) => {
 
   //   res.status(200).json({ user });
 });
+
+// @desc    Register a new user
+// @route   POST /api/users
+// @access  Public
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -46,6 +54,10 @@ const registerUser = asyncHandler(async (req, res) => {
     }
   }
 });
+
+// @desc    Get user profile
+// @route   GET /api/users/profile
+// @access  Private
 
 const getUserProfile = asyncHandler(async (req, res) => {
   //   const user = await User.findById(req.user._id);
