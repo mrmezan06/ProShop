@@ -41,6 +41,25 @@ const registerUser = asyncHandler(async (req, res) => {
   if (existingUser) {
     res.status(400).json({ message: 'User already exists!' });
   } else {
+    // Some validation for creating a new user
+    if (!name || !email || !password) {
+      res.status(400).json({ message: 'Please fill in all fields!' });
+      return;
+    }
+    if (name.length < 3) {
+      res.status(400).json({ message: 'Name must be at least 3 characters!' });
+      return;
+    }
+    if (!email.includes('@') || !email.includes('.')) {
+      res.status(400).json({ message: 'Please enter a valid email address!' });
+      return;
+    }
+    if (password.length < 6) {
+      res
+        .status(400)
+        .json({ message: 'Password must be at least 6 characters!' });
+      return;
+    }
     const salt = await becrypt.genSalt(10);
     const hashedPassword = await becrypt.hash(password, salt);
     const user = await User.create({ name, email, password: hashedPassword });
