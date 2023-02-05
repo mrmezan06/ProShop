@@ -124,8 +124,14 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
+  // Filter out the admin user
+  // const users = await (await User.find({})).filter((user) => !user.isAdmin);
   const users = await User.find({});
-  res.status(200).json(users);
+  if (users) {
+    res.status(200).json(users);
+  } else {
+    res.status(404).json({ message: 'No user found!' });
+  }
 });
 
 // @desc    Delete user
