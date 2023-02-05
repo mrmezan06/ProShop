@@ -126,7 +126,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 const getUsers = asyncHandler(async (req, res) => {
   // Filter out the admin user
   // const users = await (await User.find({})).filter((user) => !user.isAdmin);
-  const users = await User.find({});
+  const users = await User.find({}).select('-password');
   if (users) {
     res.status(200).json(users);
   } else {
