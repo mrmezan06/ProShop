@@ -29,7 +29,10 @@ app.get('/api/config/paypal', (req, res) =>
 
 // __dirname is the current directory
 // const __dirname = path.resolve();
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+app.use(
+  '/uploads',
+  express.static(path.join(__dirname, '/frontend/public/uploads'))
+);
 
 // Error handling middleware
 app.use(notFound);

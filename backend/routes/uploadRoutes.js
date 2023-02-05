@@ -5,7 +5,7 @@ const path = require('path');
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, 'frontend/public/uploads');
   },
   filename(req, file, cb) {
     cb(
@@ -17,11 +17,21 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
   // reject a file
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-    cb(null, true);
+  const filetypes = /jpg|jpeg|png/;
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (extname && mimetype) {
+    return cb(null, true);
   } else {
-    cb('Image only', false);
+    cb('Images only!');
   }
+
+  // if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+  //   cb(null, true);
+  // } else {
+  //   cb(null, false);
+  // }
 };
 
 const upload = multer({
@@ -29,11 +39,12 @@ const upload = multer({
   limits: {
     fileSize: 1024 * 1024 * 5,
   },
-  fileFilter: fileFilter,
+  fileFilter: function (req, file, cb) {
+    fileFilter(req, file, cb);
+  },
 });
 
 router.post('/', upload.single('image'), (req, res, next) => {
-  //   console.log(req.file);
   res.status(201).json(`/${req.file.path}`);
 });
 
