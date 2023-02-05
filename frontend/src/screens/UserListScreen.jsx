@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button } from 'react-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listUsers } from '../actions/userActions';
+import { listUsers, deleteUser } from '../actions/userActions';
 
 const UserListScreen = () => {
   const dispatch = useDispatch();
@@ -16,25 +16,34 @@ const UserListScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userDelete = useSelector((state) => state.userDelete);
+  const { success: successDelete, error: errorDelete } = userDelete;
+
+  //
+
   const navigate = useNavigate();
 
   useEffect(() => {
+    dispatch({ type: 'USER_DELETE_RESET' });
     if (userInfo && userInfo.isAdmin) {
       dispatch(listUsers());
     } else {
       navigate('/login');
     }
-  }, [dispatch, userInfo, navigate]);
+  }, [dispatch, userInfo, navigate, successDelete]);
 
   const deleteHandler = (id) => {
+    dispatch({ type: 'USER_DELETE_RESET' });
     if (window.confirm('Are you sure')) {
-      // DELETE USERS
+      dispatch(deleteUser(id));
     }
+    // reset error message
   };
 
   return (
     <>
       <h1>Users</h1>
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
