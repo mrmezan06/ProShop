@@ -8,6 +8,9 @@ import {
   PRODUCT_DELETE_REQUEST,
   PRODUCT_DELETE_SUCCESS,
   PRODUCT_DELETE_FAIL,
+  PRODUCT_CREATE_FAIL,
+  PRODUCT_CREATE_SUCCESS,
+  PRODUCT_CREATE_REQUEST,
 } from '../constants/productConstants';
 import axios from 'axios';
 
@@ -53,7 +56,7 @@ export const listProductDetails = (id) => async (dispatch) => {
   }
 };
 
-/* export const createProduct = () => async (dispatch, getState) => {
+export const createProduct = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: PRODUCT_CREATE_REQUEST,
@@ -65,7 +68,6 @@ export const listProductDetails = (id) => async (dispatch) => {
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
@@ -86,6 +88,8 @@ export const listProductDetails = (id) => async (dispatch) => {
     });
   }
 };
+
+/* 
 
 export const updateProduct = (product) => async (dispatch, getState) => {
   try {
