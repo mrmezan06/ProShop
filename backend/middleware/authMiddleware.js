@@ -30,16 +30,16 @@ const protect = async (req, res, next) => {
   }
 };
 
-// const admin = (req, res, next) => {
-//   if (req.user && req.user.isAdmin) {
-//     next();
-//   } else {
-//     res.status(401).send({ message: 'Not authorized as an admin' });
-//   }
-// };
+const admin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    res.status(401).send({ message: 'Not authorized as an admin' });
+  }
+};
 
 // If admin want to delete himself, he can't do it
-const admin = (req, res, next) => {
+const adminDelete = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     if (req.user._id.equals(req.params.id)) {
       res.status(401).send({ message: 'You cannot delete yourself!' });
@@ -51,4 +51,4 @@ const admin = (req, res, next) => {
   }
 };
 
-module.exports = { protect, admin };
+module.exports = { protect, admin, adminDelete };
