@@ -125,6 +125,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
   // Filter out the admin user
+  // Logged in user can be found in req.user object -> req.user.isAdmin
   // const users = await (await User.find({})).filter((user) => !user.isAdmin);
   const users = await User.find({}).select('-password');
   if (users) {
