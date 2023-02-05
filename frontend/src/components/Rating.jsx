@@ -64,6 +64,8 @@ const Rating = ({ value, text, color }) => {
           }
         ></i>
       </span>
+      {/* Line Break */}
+      <br />
       <span>{text && text}</span>
     </div>
   );
