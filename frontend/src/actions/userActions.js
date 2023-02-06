@@ -1,6 +1,10 @@
 import axios from 'axios';
+import { CART_RESET } from '../constants/cartConstants';
 // import { CART_RESET } from '../constants/cartConstants';
-import { ORDER_LIST_MY_RESET } from '../constants/orderConstants';
+import {
+  ORDER_DETAILS_RESET,
+  ORDER_LIST_MY_RESET,
+} from '../constants/orderConstants';
 import {
   USER_DELETE_FAIL,
   USER_DELETE_REQUEST,
@@ -68,8 +72,10 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: ORDER_LIST_MY_RESET });
+  dispatch({ type: ORDER_DETAILS_RESET });
   dispatch({ type: USER_LIST_RESET });
-  // dispatch({ type: CART_RESET });
+  dispatch({ type: CART_RESET });
+  // dispatch({ type: ORDER_RESET})
 };
 
 export const register = (name, email, password) => async (dispatch) => {

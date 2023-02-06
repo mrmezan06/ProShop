@@ -6,6 +6,7 @@ import { Table, Button } from 'react-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listUsers, deleteUser } from '../actions/userActions';
+import { USER_DELETE_RESET } from '../constants/userConstants';
 
 const UserListScreen = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const UserListScreen = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch({ type: 'USER_DELETE_RESET' });
+    dispatch({ type: USER_DELETE_RESET });
     if (userInfo && userInfo.isAdmin) {
       dispatch(listUsers());
     } else {
