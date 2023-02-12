@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const connectDB = require('./config/db');
 // const products = require('./data/products');
 const dotenv = require('dotenv');
@@ -16,6 +17,17 @@ const app = express();
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+const origin = [
+  'http://localhost:3000',
+  'https://proshop-inventory.netlify.app',
+];
+app.use(
+  cors({
+    origin: origin,
+  })
+);
+
 app.use(express.json());
 
 // app.get('/', (req, res) => {
