@@ -54,10 +54,14 @@ app.get('/', (req, res) => {
     res.send('API is running...');
   });
 } */
-
+/* File upload problem on cross server file system */
 // __dirname is the current directory
 // const __dirname = path.resolve();
-app.use('/', express.static(path.join(__dirname, '/frontend/public/images')));
+// /frontend/public/images
+// app.use(
+//   '/',
+//   express.static(path.join(__dirname, 'frontend', 'public', 'images'))
+// );
 
 // Error handling middleware
 app.use(notFound);

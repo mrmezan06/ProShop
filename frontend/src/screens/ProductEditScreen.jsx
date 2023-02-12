@@ -8,8 +8,6 @@ import FormContainer from '../components/FormContainer';
 import { listProductDetails, updateProduct } from '../actions/productActions';
 import { Link } from 'react-router-dom';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
-import axios from 'axios';
-import { BASE_URL } from '../constants/baseUrlConstant';
 
 const ProductEditScreen = () => {
   const [name, setName] = useState('');
@@ -19,9 +17,6 @@ const ProductEditScreen = () => {
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
-  const [uploading, setUploading] = useState(false);
-
-  const [fileError, setFileError] = useState('');
 
   const dispatch = useDispatch();
   const params = useParams();
@@ -75,47 +70,6 @@ const ProductEditScreen = () => {
     );
   };
 
-  const uploadFileHandler = async (e) => {
-    e.preventDefault();
-    setFileError('');
-    const file = e.target.files[0];
-    // log file size
-    console.log(file.size);
-    if (file.size > 2048000) {
-      setFileError('File size is too large. Max size is 2MB');
-      return;
-    }
-
-    if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
-      setFileError('Only JPG and PNG are supported');
-      return;
-    }
-
-    setUploading(true);
-    const formData = new FormData();
-    formData.append('image', file);
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      };
-      const { data } = await axios.post(
-        `${BASE_URL}/api/upload`,
-        formData,
-        config
-      );
-      //   console.log(data);
-      const filename = data.split('\\').pop();
-      console.log(filename);
-      setImage('/uploads/' + filename);
-      setUploading(false);
-    } catch (error) {
-      setFileError(error.response.data.message || error.message);
-      setUploading(false);
-    }
-  };
-
   return (
     <>
       <Link to="/admin/productlist" className="btn btn-light my-3">
@@ -123,7 +77,7 @@ const ProductEditScreen = () => {
       </Link>
       <FormContainer>
         <h1>Edit Product</h1>
-        {fileError && <Message variant="danger">{fileError}</Message>}
+
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
@@ -160,12 +114,6 @@ const ProductEditScreen = () => {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
-              <Form.Control
-                label="Choose File"
-                type="file"
-                onChange={uploadFileHandler}
-              ></Form.Control>
-              {uploading && <Loader />}
             </Form.Group>
 
             <Form.Group controlId="brand">
