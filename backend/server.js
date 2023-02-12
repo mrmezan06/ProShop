@@ -18,13 +18,9 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-const origin = [
-  'http://localhost:3000',
-  'https://proshop-inventory.netlify.app',
-];
 app.use(
   cors({
-    origin: origin,
+    origin: '*',
   })
 );
 
