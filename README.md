@@ -13,7 +13,7 @@ This is a simple web application that allows users to search for books and add t
 - [Installation](#installation)
 - [Usage](#usage)
 - [Packages](#packages)
-- [Live Demo](#live-demo)
+- [Live Demo](#livedemo)
 - [Contributing](#contributing)
 - [License](#license)
 
