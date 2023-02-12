@@ -9,6 +9,7 @@ import { listProductDetails, updateProduct } from '../actions/productActions';
 import { Link } from 'react-router-dom';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
 import axios from 'axios';
+import { BASE_URL } from '../constants/baseUrlConstant';
 
 const ProductEditScreen = () => {
   const [name, setName] = useState('');
@@ -99,7 +100,11 @@ const ProductEditScreen = () => {
           'Content-Type': 'multipart/form-data',
         },
       };
-      const { data } = await axios.post('/api/upload', formData, config);
+      const { data } = await axios.post(
+        `${BASE_URL}/api/upload`,
+        formData,
+        config
+      );
       //   console.log(data);
       const filename = data.split('\\').pop();
       console.log(filename);
