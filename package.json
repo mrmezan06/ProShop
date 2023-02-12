@@ -5,9 +5,12 @@
   "main": "server.js",
   "scripts": {
     "start": "node backend/server",
-    "server": "nodemon backend/server",
+    "dev-server": "nodemon backend/server",
     "client": "npm start --prefix frontend",
+    "client-install": "npm install --legacy-peer-deps --prefix frontend",
+    "server-install": "npm install && npm run client-install",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "concurrently \"npm start\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d"
   },
