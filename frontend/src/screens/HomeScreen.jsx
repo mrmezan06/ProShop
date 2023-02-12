@@ -8,6 +8,8 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Paginate from '../components/Paginate';
 import ProductCarousel from '../components/ProductCarousel';
+import Meta from '../components/Meta';
+import { Link } from 'react-router-dom';
 
 const HomeScreen = () => {
   const param = useParams();
@@ -23,7 +25,18 @@ const HomeScreen = () => {
 
   return (
     <>
-      {!keyword && <ProductCarousel />}
+      <Meta
+        title="ProShop || Home"
+        description="We sell best products on cheap price."
+        keywords="electronics, buy electronics, cheap electronics"
+      />
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
+        <Link to="/" className="btn btn-light">
+          Go Back
+        </Link>
+      )}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />
