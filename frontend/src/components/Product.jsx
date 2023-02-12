@@ -12,7 +12,11 @@ const Product = ({ product }) => {
       <Card.Body>
         <Link to={`/product/${product._id}`}>
           <Card.Title as="div">
-            <strong>{product.name}</strong>
+            <strong>
+              {product.name.length > 40
+                ? `${product.name.substring(0, 40)}...`
+                : product.name}
+            </strong>
           </Card.Title>
         </Link>
         <Card.Text as="div">
