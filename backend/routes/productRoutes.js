@@ -5,21 +5,14 @@ const {
   deleteProduct,
   createProduct,
   updateProduct,
+  createProductReview,
 } = require('../controllers/productController');
 
 const { protect, admin } = require('../middleware/authMiddleware');
-
 const router = express.Router();
 
-// @desc    Fetch all products
-// @route   GET /api/products
-// @access  Public
-
 router.get('/', getProducts);
-
-// @desc    Fetch single product
-// @route   GET /api/products/:id
-// @access  Public
+router.post('/:id/reviews', protect, createProductReview);
 router.get('/:id', getProductById);
 router.delete('/:id', protect, admin, deleteProduct);
 router.post('/', protect, admin, createProduct);
