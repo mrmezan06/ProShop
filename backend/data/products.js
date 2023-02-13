@@ -974,6 +974,24 @@ const products = [
 ];
 
 module.exports = products;
+
+/* 
+Sample product object:
+
+{
+    name: '',
+    image: '',
+    description: '',
+    brand: '',
+    category: '',
+    price: 0,
+    countInStock: 10,
+    rating: 0,
+    numReviews: 0,
+  },
+
+*/
+
 /* When we use ES6 modules, we can use export default instead of module.exports.
  *  This is because ES6 modules are not supported in Node.js yet.
  *  So, we use module.exports instead.
