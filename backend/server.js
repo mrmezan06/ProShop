@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-// const cors = require('cors');
+const cors = require('cors');
 const connectDB = require('./config/db');
 // const products = require('./data/products');
 const dotenv = require('dotenv');
