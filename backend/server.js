@@ -20,11 +20,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(
   cors({
-    origin: [
-      'https://proshop-inventory.netlify.app',
-      'http://localhost:3000',
-      'https://proshop-inventory.netlify.app/*',
-    ],
+    origin: ['https://proshop-inventory.netlify.app', 'http://localhost:3000'],
   })
 );
 
